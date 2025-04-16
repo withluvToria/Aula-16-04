@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Conversor de Moedas Duplo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(to right, #f3e5f5, #e1bee7);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 40px;
+            color: #4a148c;
+        }
+
+        .container {
+            background-color: white;
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            max-width: 900px;
+            margin: auto;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #6a1b9a;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input, select {
+            margin-bottom: 15px;
+        }
+
+        button {
+            background-color: #ba68c8;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background-color: #9c27b0;
+            transform: scale(1.05);
+        }
+
+        .resultado {
+            margin-top: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+            color: #6a1b9a;
+        }
+
+        .col-md-6 {
+            padding: 20px;
+            border-right: 1px solid #ccc;
+        }
+
+        .col-md-6:last-child {
+            border-right: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Conversor de Moedas 💱</h2>
+        <div class="row">
+            <!-- BRL para outras moedas -->
+            <div class="col-md-6">
+                <h4>De Real para Moeda Estrangeira</h4>
+                <label for="valorBRL">Valor em Reais (BRL):</label>
+                <input type="number" class="form-control" id="valorBRL" placeholder="Ex: 100.00">
+                
+                <label for="moedaDestino">Converter para:</label>
+                <select class="form-select" id="moedaDestino">
+                    <option value="USD">Dólar (USD)</option>
+                    <option value="EUR">Euro (EUR)</option>
+                    <option value="GBP">Libra Esterlina (GBP)</option>
+                </select>
+
+                <button onclick="converterBRLParaMoeda()">Converter</button>
+                <p class="resultado" id="resultado1"></p>
+            </div>
+
+            <!-- Moedas para BRL -->
+            <div class="col-md-6">
+                <h4>De Moeda Estrangeira para Real</h4>
+                <label for="valorMoeda">Valor em moeda estrangeira:</label>
+                <input type="number" class="form-control" id="valorMoeda" placeholder="Ex: 50.00">
+
+                <label for="moedaOrigem">Moeda:</label>
+                <select class="form-select" id="moedaOrigem">
+                    <option value="USD">Dólar (USD)</option>
+                    <option value="EUR">Euro (EUR)</option>
+                    <option value="GBP">Libra Esterlina (GBP)</option>
+                </select>
+
+                <button onclick="converterMoedaParaBRL()">Converter</button>
+                <p class="resultado" id="resultado2"></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const taxas = {
+            USD: 5.10,
+            EUR: 5.45,
+            GBP: 6.30
+        };
+
+        function converterBRLParaMoeda() {
+            const valor = parseFloat(document.getElementById("valorBRL").value);
+            const moeda = document.getElementById("moedaDestino").value;
+            const simbolo = { USD: "US$", EUR: "€", GBP: "£" };
+
+            if (isNaN(valor)) {
+                document.getElementById("resultado1").innerHTML = "Insira um valor válido.";
+                return;
+            }
+
+            const resultado = valor / taxas[moeda];
+            document.getElementById("resultado1").innerHTML = 
+                `R$${valor.toFixed(2)} = ${simbolo[moeda]}${resultado.toFixed(2)}`;
+        }
+
+        function converterMoedaParaBRL() {
+            const valor = parseFloat(document.getElementById("valorMoeda").value);
+            const moeda = document.getElementById("moedaOrigem").value;
+            const simbolo = { USD: "US$", EUR: "€", GBP: "£" };
+
+            if (isNaN(valor)) {
+                document.getElementById("resultado2").innerHTML = "Insira um valor válido.";
+                return;
+            }A
+
+            const resultado = valor * taxas[moeda];
+            document.getElementById("resultado2").innerHTML = 
+                `${simbolo[moeda]}${valor.toFixed(2)} = R$${resultado.toFixed(2)}`;
+        }
+    </script>
+</body>
+</html>
